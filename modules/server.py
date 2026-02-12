@@ -440,7 +440,6 @@ async def server_get_alerts(timeout: int = 15) -> str:
     except Exception as e:
         return json.dumps({"status": "error", "message": str(e)}, indent=4)
 
-@mcp.tool()
 async def server_run_butler_task(task_name: str) -> str:
     """Manually run a specific Plex Butler task now.
     
@@ -556,7 +555,6 @@ async def server_empty_trash(library_name: str = None) -> str:
             "message": f"Error emptying trash: {str(e)}"
         }, indent=4)
 
-@mcp.tool()
 async def server_optimize_database() -> str:
     """Optimize the Plex database.
     
@@ -582,7 +580,6 @@ async def server_optimize_database() -> str:
             "message": f"Error optimizing database: {str(e)}"
         }, indent=4)
 
-@mcp.tool()
 async def server_clean_bundles() -> str:
     """Clean unused media bundles.
     

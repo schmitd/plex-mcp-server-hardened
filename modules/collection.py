@@ -516,7 +516,6 @@ async def collection_remove_from(collection_title: str = None, collection_id: in
     except Exception as e:
         return json.dumps({"error": str(e)}, indent=4)
 
-@mcp.tool()
 async def collection_delete(collection_title: str = None, collection_id: int = None, library_name: str = None) -> str:
     """Delete a collection.
     

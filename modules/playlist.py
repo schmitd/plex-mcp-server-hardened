@@ -647,7 +647,6 @@ async def playlist_remove_from(playlist_title: str = None, playlist_id: int = No
     except Exception as e:
         return json.dumps({"error": str(e)}, indent=4)
 
-@mcp.tool()
 async def playlist_delete(playlist_title: str = None, playlist_id: int = None) -> str:
     """Delete a playlist.
     

@@ -841,7 +841,6 @@ async def media_get_artwork(media_title: str = None, media_id: int = None, libra
     except Exception as e:
         return json.dumps({"error": f"Error getting images: {str(e)}"}, indent=4)
 
-@mcp.tool()
 async def media_delete(media_title: str = None, media_id: int = None, library_name: str = None) -> str:
     """Delete a media item from the Plex library.
     
