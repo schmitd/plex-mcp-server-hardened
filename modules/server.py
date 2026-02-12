@@ -321,10 +321,7 @@ async def server_get_butler_tasks() -> str:
         url = f"{base_url}/butler"
         headers = {'X-Plex-Token': token, 'Accept': 'application/xml'}
         
-        # Disable SSL verification if using https
-        verify = False if base_url.startswith('https') else True
-        
-        response = requests.get(url, headers=headers, verify=verify)
+        response = requests.get(url, headers=headers)
         
         if response.status_code == 200:
             # Parse the XML response
@@ -470,11 +467,8 @@ async def server_run_butler_task(task_name: str) -> str:
         url = f"{base_url}/butler/{task_name}"
         headers = {'X-Plex-Token': token}
         
-        # Disable SSL verification if using https
-        verify = False if base_url.startswith('https') else True
-        
         print(f"Running butler task: {task_name}")
-        response = requests.post(url, headers=headers, verify=verify)
+        response = requests.post(url, headers=headers)
         
         print(f"Response status: {response.status_code}")
         print(f"Response text: {response.text}")
@@ -512,7 +506,6 @@ async def server_run_butler_task(task_name: str) -> str:
             "traceback": traceback.format_exc()
         }, indent=4)
 
-@mcp.tool()
 async def server_empty_trash(library_name: str = None) -> str:
     """Empty trash for a specific library or all libraries.
     

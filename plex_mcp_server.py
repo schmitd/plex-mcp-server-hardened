@@ -1,6 +1,8 @@
 import argparse
 import os
 import json
+import sys
+import builtins
 import uvicorn # type: ignore
 from starlette.applications import Starlette # type: ignore
 from starlette.routing import Mount, Route # type: ignore
@@ -10,6 +12,16 @@ from mcp.server import Server # type: ignore
 from mcp.server.sse import SseServerTransport # type: ignore
 from starlette.requests import Request # type: ignore
 from dotenv import load_dotenv # type: ignore
+
+_builtin_print = builtins.print
+
+
+def _stderr_print(*args, **kwargs):
+    kwargs.setdefault("file", sys.stderr)
+    return _builtin_print(*args, **kwargs)
+
+
+builtins.print = _stderr_print
 
 def init_environment():
     """Load environment variables from standard locations."""
@@ -277,7 +289,6 @@ def create_starlette_app(mcp_server: Server, debug: bool = False):
                             async with session.post(token_endpoint, data=body, headers=headers) as token_resp:
                                 content = await token_resp.text()
                                 print(f"[Token] Response status: {token_resp.status}")
-                                print(f"[Token] Response content (full): {content}")
                                 response_headers = {
                                     "Content-Type": token_resp.headers.get("Content-Type", "application/json"),
                                 }
